@@ -73,3 +73,5 @@ index.android.bundle
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+__update

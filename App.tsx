@@ -18,6 +18,7 @@ import {
 import WebView from 'react-native-webview';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {useCheckVersion} from './useCheckVersion';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -159,7 +160,9 @@ function App(): React.JSX.Element {
   const webviewRef = useRef<WebView>(null);
   const [visible, setVisible] = useState(false);
   const [index, setIndex] = useState(5);
-  localStorage;
+
+  useCheckVersion();
+
 
   const channel = channels[index];
   webviewRef.current;
