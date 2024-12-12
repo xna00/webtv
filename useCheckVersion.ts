@@ -23,7 +23,7 @@ export const useCheckVersion = () => {
     });
   };
   const onCheckVersion = () => {
-    const apiVersionBase = 'https://cdn.jsdelivr.net/npm/webtv-ota/';
+    const apiVersionBase = 'https://cdn.jsdelivr.net/npm/webtvota/';
     fetch(new URL('update.json', apiVersionBase), {
       headers: {
         'Cache-Control': 'no-cache',
