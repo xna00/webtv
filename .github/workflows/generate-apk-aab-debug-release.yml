@@ -71,6 +71,7 @@ jobs:
         run: |
           mkdir ota
           echo "{\"name\": \"webtv-ota\", \"version\": \"0.0.$(date +'%Y%m%d%H%M%S')\", \"files\": [\"update.json\", \"index.android.bundle.zip\"]}" > ./ota/package.json
+          echo { "version": $(date +'%Y%m%d%H%M%S'), "downloadAndroidUrl": "index.android.bundle.zip", "downloadIosUrl": "main.jsbundle.zip" } > ./ota/update.json
           yarn export-android
       - name: NPM publish
         working-directory: ota
