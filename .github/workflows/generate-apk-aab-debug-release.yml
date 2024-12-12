@@ -74,6 +74,8 @@ jobs:
           yarn export-android
       - name: NPM publish
         working-directory: ota
-        run: npm publish
+        run: |
+          npm set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
