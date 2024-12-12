@@ -4,7 +4,7 @@ import packageJson from '../package.json' with { type: "json" }
 
 const version = packageJson.version
 fs.writeFileSync('./ota/package.json', JSON.stringify({
-  name: "webtv-ota",
+  name: "webtvota",
   version,
   files: ["update.json", "index.android.bundle.zip"]
 }
