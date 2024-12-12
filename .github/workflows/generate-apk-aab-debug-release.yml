@@ -66,3 +66,14 @@ jobs:
         with:
           name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) release generated
           path: android/${{ env.main_project_module }}/build/outputs/apk/release/
+
+      - name: Build ota files
+        run: |
+          mkdir ota
+          echo "{\"name\": \"webtv-ota\", \"version\": \"0.0.$(date +'%Y%m%d%H%M%S')\", \"files\": [\"update.json\", \"index.android.bundle.zip\"]}" > ./ota/package.json
+          yarn export-android
+      - name: NPM publish
+        working-directory: ota
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
