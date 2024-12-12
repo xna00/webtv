@@ -1,28 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import type {PropsWithChildren} from 'react';
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-  useColorScheme,
-} from 'react-native';
+import {ScrollView, StatusBar, Text, View} from 'react-native';
 import WebView from 'react-native-webview';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useCheckVersion} from './useCheckVersion';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
 
 const hnChannels = [
   '河南卫视',
@@ -163,7 +143,6 @@ function App(): React.JSX.Element {
 
   useCheckVersion();
 
-
   const channel = channels[index];
   webviewRef.current;
 
@@ -244,24 +223,5 @@ function App(): React.JSX.Element {
     // </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;
