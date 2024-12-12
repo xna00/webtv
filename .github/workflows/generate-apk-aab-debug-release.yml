@@ -36,6 +36,20 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Build ota files
+        run: |
+          mkdir ota
+          node scripts/ota.js
+          yarn export-android
+
+      - name: NPM publish
+        working-directory: ota
+        run: |
+          npm set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
       # Set Current Date As Env Variable
       - name: Set current date as env variable
         run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
@@ -66,16 +80,3 @@ jobs:
         with:
           name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) release generated
           path: android/${{ env.main_project_module }}/build/outputs/apk/release/
-
-      - name: Build ota files
-        run: |
-          mkdir ota
-          node scripts/ota.js
-          yarn export-android
-      - name: NPM publish
-        working-directory: ota
-        run: |
-          npm set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
