@@ -1,6 +1,6 @@
 {
   "name": "webtv",
-  "version": "0.0",
+  "version": "0.0.1",
   "private": true,
   "files": [],
   "scripts": {
@@ -14,7 +14,6 @@
     "build-android": "cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && cd.."
   },
   "dependencies": {
-    "dayjs": "^1.11.13",
     "react": "18.3.1",
     "react-native": "0.76.5",
     "react-native-blob-util": "^0.19.11",

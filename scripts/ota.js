@@ -1,9 +1,8 @@
 import fs from 'fs'
 import packageJson from '../package.json' with { type: "json" }
-import dayjs from 'dayjs'
 
 
-const version = packageJson.version + `.${dayjs().format('YYYYMMDDHHmmss')}`
+const version = packageJson.version
 fs.writeFileSync('./ota/package.json', JSON.stringify({
   name: "webtv-ota",
   version,
