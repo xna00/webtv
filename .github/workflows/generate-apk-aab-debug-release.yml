@@ -24,6 +24,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '23'
+
+      # Setup Yarn
+      - name: Setup yarn
+        run: npm install -g yarn
+
+      # Install Dependencies
+      - name: Install dependencies
+        run: yarn install
+
       # Set Current Date As Env Variable
       - name: Set current date as env variable
         run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
