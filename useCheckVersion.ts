@@ -36,8 +36,16 @@ export const useCheckVersion = () => {
         }
         const [v1a, v1b, v1c] = result.version.split('.');
         const [v2a, v2b, v2c] = version.split('.');
+        // Alert.alert(
+        //   '发现新版本，请更新',
+        //   `当前版本：${version}, ${v2a} ${v2b} ${v2c} ，最新版本：${result.version} ${v1a} ${v1b} ${v1c} ${v1a !== v2a || v1b !== v2b}`,
+        // );
         if (v1a !== v2a || v1b !== v2b) {
-          ToastAndroid.show('发现新版本，请更新', ToastAndroid.SHORT);
+          ToastAndroid.show(
+            '发现新版本，请更新 ' +
+              `当前版本：${version}，最新版本：${result.version}`,
+            ToastAndroid.LONG,
+          );
           return;
         }
         const currentVersion =
