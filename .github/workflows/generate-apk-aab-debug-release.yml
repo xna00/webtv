@@ -62,7 +62,7 @@ jobs:
           port: ${{ secrets.PORT }}
           source: "ota/*"
           target: "/var/www/html/webtvota"
-          strip_components: 2
+          strip_components: 1
 
       # Set Current Date As Env Variable
       - name: Set current date as env variable
