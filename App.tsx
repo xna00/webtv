@@ -202,7 +202,7 @@ function App(): React.JSX.Element {
             key={c.url + c.name}
             style={{
               borderWidth: 1,
-              borderColor: i === index ? 'blue' : 'black',
+              borderColor: i === index ? 'red' : 'black',
             }}
             onTouchEnd={e => {
               setIndex(i);
