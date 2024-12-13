@@ -45,6 +45,7 @@ jobs:
           yarn export-android
 
       - name: NPM publish
+        continue-on-error: true
         working-directory: ota
         run: |
           npm set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
