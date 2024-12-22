@@ -2,7 +2,7 @@ import React from 'react';
 import hotUpdate from 'react-native-ota-hot-update';
 import {Alert, Platform, ToastAndroid} from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
-import {version} from './ota/package.json';
+import {version} from './package.json';
 
 export const useCheckVersion = () => {
   const startUpdate = async (url: string, version: number) => {
@@ -24,7 +24,7 @@ export const useCheckVersion = () => {
   };
   const onCheckVersion = () => {
     // const apiVersionBase = 'https://cdn.jsdelivr.net/npm/webtvota@latest/';
-    const apiVersionBase = 'http://47.115.207.147:8888/webtvota/'
+    const apiVersionBase = 'http://47.115.207.147:8888/webtvota/';
     fetch(new URL('update.json', apiVersionBase), {
       headers: {
         'Cache-Control': 'no-cache',
@@ -55,7 +55,7 @@ export const useCheckVersion = () => {
         if (Number(v1c) > currentVersion) {
           Alert.alert(
             'New version is comming!',
-            'New version has release, please update',
+            `New version has release, please update ${v2a}.${v2b}.${currentVersion} -> ${result.version}`,
             [
               {
                 text: 'Cancel',
