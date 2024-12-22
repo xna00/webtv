@@ -25,12 +25,16 @@ const hnChannels = [
 ];
 
 const hnCode = (name: string) => `
+[...document.querySelectorAll('audio, video')].forEach(el => el.muted = true)
 const style = document.createElement('style');
 document.head.appendChild(style);
 style.sheet.insertRule('video { visibility: hidden; }', 0);
+[...document.querySelectorAll('audio, video')].forEach(el => el.muted = true)
+
 
 
 function change(name) {
+  // [...document.querySelectorAll('audio, video')].forEach(el => el.muted = true)
   const list = document.querySelector('.channelList');
   console.log(list)
   const item = [...list.querySelectorAll('.channelContent')].find(e => {
@@ -55,8 +59,7 @@ function change(name) {
 
   const style2 = document.createElement('style');
   document.head.appendChild(style2);
-  style2.sheet.insertRule('* { visibility: hidden; }', 0);
-  style2.sheet.insertRule('body { height: 100vh; }', 0);
+  style2.sheet.insertRule('* { width: 0 !important; height: 0!important }', 0);
   style2.sheet.insertRule(\`video {
     width: 100vw !important;
     height: 100vh !important;
@@ -169,7 +172,7 @@ function App() {
     // <SafeAreaView style={backgroundStyle}>
     <View
       style={{height: '100%'}}
-      onTouchStart={e => {
+      onTouchEnd={e => {
         e.stopPropagation();
         setVisible(!visible);
       }}>
@@ -216,7 +219,9 @@ function App() {
             key={c.url + c.name}
             style={{
               borderWidth: 1,
-              borderColor: i === index ? 'red' : 'black',
+              borderColor: i === index ? 'red' : 'transparent',
+              padding: 4,
+              borderRadius: 4,
             }}
             onTouchEnd={e => {
               setIndex(i);
@@ -224,7 +229,6 @@ function App() {
             <Text
               style={{
                 fontSize: 20,
-                // fontWeight: 'bold',
                 padding: 4,
               }}>
               {c.name}
