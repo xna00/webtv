@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {ScrollView, StatusBar, Text, View} from 'react-native';
 import WebView from 'react-native-webview';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {useCheckVersion} from './useCheckVersion';
 
@@ -136,26 +137,39 @@ const channels: {name: string; url: string; code: string}[] = [
   })),
 ];
 
-function App(): React.JSX.Element {
+function App() {
   const webviewRef = useRef<WebView>(null);
   const [visible, setVisible] = useState(false);
-  const [index, setIndex] = useState(5);
+  const [index, setIndex] = useState<number>();
+  const channel = typeof index === 'number' ? channels[index] : undefined;
 
   useCheckVersion();
 
-  const channel = channels[index];
-  webviewRef.current;
-
   useEffect(() => {
     webviewRef.current?.reload();
+    if (typeof index === 'number') {
+      AsyncStorage.setItem('lastIndex', index.toString());
+    }
   }, [index]);
+
+  useEffect(() => {
+    AsyncStorage.getItem('lastIndex').then(res => {
+      console.log(res);
+      let i = Number(res ?? 0);
+      if (i < 0 || i >= channels.length) {
+        i = 0;
+      }
+      setIndex(i);
+    });
+  }, []);
+
+  if (!channel) return null;
 
   return (
     // <SafeAreaView style={backgroundStyle}>
     <View
       style={{height: '100%'}}
       onTouchStart={e => {
-        console.log(e);
         e.stopPropagation();
         setVisible(!visible);
       }}>
@@ -179,7 +193,7 @@ function App(): React.JSX.Element {
           allowsInlineMediaPlayback={true}
           mediaCapturePermissionGrantType="grant"
           onLoad={e => {
-            console.log(channel.code);
+            // console.log(channel.code);
             webviewRef.current?.injectJavaScript(channel.code);
           }}></WebView>
       </View>
