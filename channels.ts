@@ -228,6 +228,39 @@ const hubeiList = hubeiChannels.map((channel, i) => ({
   `,
 }));
 
+const sdChannels = [
+  {name: '山东卫视', url: 'iqilu.com/live/sdtv/'},
+  {name: '齐鲁频道', url: 'iqilu.com/live/qlpd/'},
+  {name: '体育频道', url: 'iqilu.com/live/typd/'},
+  {name: '生活频道', url: 'iqilu.com/live/shpd/'},
+  {name: '综艺频道', url: 'iqilu.com/live/zypd/'},
+  {name: '新闻频道', url: 'iqilu.com/live/ggpd/'},
+  {name: '农科频道', url: 'iqilu.com/live/nkpd/'},
+  {name: '文旅频道', url: 'iqilu.com/live/yspd/'},
+  {name: '少儿频道', url: 'iqilu.com/live/sepd/'},
+];
+
+const sdList = sdChannels.map((channel, i) => ({
+  name: channel.name,
+  url: 'https://v.' + channel.url,
+  code: `
+  const style2 = document.createElement('style');
+  document.head.appendChild(style2);
+  style2.sheet.insertRule('* { width: 0 !important; height: 0!important; padding: 0!important; overflow: hidden!important }', 0);
+  style2.sheet.insertRule(\`video {
+    width: 100vw !important;
+    height: 100vh !important;
+    left: 0px !important;
+    top: 0px !important;
+    display: block !important;
+    visibility: visible !important;
+    cursor: auto !important;
+    position: fixed !important;
+    background: black !important;
+  }\`, 0); 
+  `,
+}));
+
 export const channels: {name: string; url: string; code: string}[] = [
   ...[
     {name: 'CCTV-1 综合', url: 'https://tv.cctv.com/live/cctv1/'},
@@ -265,4 +298,5 @@ export const channels: {name: string; url: string; code: string}[] = [
   ...jsChannelList,
   ...hbList,
   ...hubeiList,
+  ...sdList,
 ];
