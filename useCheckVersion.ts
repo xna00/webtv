@@ -1,6 +1,6 @@
 import React from 'react';
 import hotUpdate from 'react-native-ota-hot-update';
-import {Alert, Platform, ToastAndroid} from 'react-native';
+import {Alert, Linking, Platform, ToastAndroid} from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import {version} from './package.json';
 
@@ -25,6 +25,7 @@ export const useCheckVersion = () => {
   const onCheckVersion = () => {
     // const apiVersionBase = 'https://cdn.jsdelivr.net/npm/webtvota@latest/';
     const apiVersionBase = 'http://47.115.207.147:8888/webtvota/';
+    const apkUrl = apiVersionBase + 'app-release.apk';
     fetch(new URL('update.json', apiVersionBase), {
       headers: {
         'Cache-Control': 'no-cache',
@@ -37,15 +38,22 @@ export const useCheckVersion = () => {
         }
         const [v1a, v1b, v1c] = result.version.split('.');
         const [v2a, v2b, v2c] = version.split('.');
-        // Alert.alert(
-        //   '发现新版本，请更新',
-        //   `当前版本：${version}, ${v2a} ${v2b} ${v2c} ，最新版本：${result.version} ${v1a} ${v1b} ${v1c} ${v1a !== v2a || v1b !== v2b}`,
-        // );
         if (v1a !== v2a || v1b !== v2b) {
-          ToastAndroid.show(
-            '发现新版本，请更新 ' +
-              `当前版本：${version}，最新版本：${result.version}`,
-            ToastAndroid.LONG,
+          Alert.alert(
+            '发现新版本，请更新',
+            `当前版本：${version}，最新版本：${result.version}`,
+            [
+              {
+                text: '取消',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+              },
+              {
+                text: '下载',
+                onPress: () =>
+                  Platform.OS === 'android' && Linking.openURL(apkUrl),
+              },
+            ],
           );
           return;
         }
@@ -54,16 +62,16 @@ export const useCheckVersion = () => {
         console.log(currentVersion);
         if (Number(v1c) > currentVersion) {
           Alert.alert(
-            'New version is comming!',
-            `New version has release, please update ${v2a}.${v2b}.${currentVersion} -> ${result.version}`,
+            '发现新版本',
+            `${v2a}.${v2b}.${currentVersion} -> ${result.version}`,
             [
               {
-                text: 'Cancel',
+                text: '取消',
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel',
               },
               {
-                text: 'Update',
+                text: '更新',
                 onPress: () =>
                   startUpdate(
                     Platform.OS === 'ios'
