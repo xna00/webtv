@@ -82,24 +82,24 @@ jobs:
           name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) release generated
           path: android/${{ env.main_project_module }}/build/outputs/apk/release/
 
-      - name: Copy webtvota
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          source: 'android/${{ env.main_project_module }}/build/outputs/apk/release/'
-          target: '/var/www/html/webtvota'
-          strip_components: 6
+      # - name: Copy webtvota
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     password: ${{ secrets.PASSWORD }}
+      #     port: ${{ secrets.PORT }}
+      #     source: 'android/${{ env.main_project_module }}/build/outputs/apk/release/'
+      #     target: '/var/www/html/webtvota'
+      #     strip_components: 6
 
-      - name: Copy webtvota
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          source: 'ota/*'
-          target: '/var/www/html/webtvota'
-          strip_components: 1
+      # - name: Copy webtvota
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     password: ${{ secrets.PASSWORD }}
+      #     port: ${{ secrets.PORT }}
+      #     source: 'ota/*'
+      #     target: '/var/www/html/webtvota'
+      #     strip_components: 1
