@@ -11,7 +11,8 @@
     "test": "jest",
     "export-android": "mkdir -p android/output && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/output/index.android.bundle --assets-dest android/output  && cd android && find output -type f | zip index.android.bundle.zip -@ && cd .. && rm -rf android/output && mv android/index.android.bundle.zip ./ota",
     "export-ios": "mkdir -p ios/output && react-native bundle --platform ios --dev false --entry-file index.js --bundle-output ios/output/main.jsbundle --assets-dest ios/output && cd ios && find output -type f | zip main.jsbundle.zip -@ && cd .. && rm -rf ios/output",
-    "build-android": "cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && cd.."
+    "build-android": "cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && cd ..",
+    "install-android": "adb install -r android/app/build/outputs/apk/release/app-release.apk"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.1.0",
