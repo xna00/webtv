@@ -24,7 +24,7 @@ export const useCheckVersion = () => {
   };
   const onCheckVersion = () => {
     // const apiVersionBase = 'https://cdn.jsdelivr.net/npm/webtvota@latest/';
-    const apiVersionBase = 'http://47.115.207.147:8888/webtvota/';
+    const apiVersionBase = 'https://webtv0.netlify.app/';
     const apkUrl = apiVersionBase + 'app-release.apk';
     fetch(new URL('update.json', apiVersionBase), {
       headers: {
