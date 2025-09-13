@@ -17,6 +17,31 @@ const hnChannels = [
   // '欢腾购物',
 ];
 
+const hnStartCode = `
+cookieStore.set({
+    "domain": "hntv.tv",
+    "expires": null,
+    "name": "token",
+    "partitioned": false,
+    "path": "/",
+    "sameSite": "lax",
+    "secure": false,
+    "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlvbklkIjpudWxsLCJ1c2VyX25hbWUiOiIxNTM0NjM0OTg5NyIsIm1vYmlsZSI6IjE1MzQ2MzQ5ODk3IiwiZHhVc2VySWQiOiIxOTY2MDI5ODE4NjgyMDkzNTcxIiwiYWN0dWFsX25hbWUiOm51bGwsImNsaWVudF9hdXRob3JpdGllcyI6WyJST0xFX1NVQlNDUklCRSIsIlJPTEVfQ01TIiwiUk9MRV9VU0VSIiwiUk9MRV9EWE5VTSIsIlJPTEVfRlVTSU9OIiwiUk9MRV9BVVRIIiwiUk9MRV9EWFFVQU4iLCJST0xFX0RYTlVNWk5YIiwiUk9MRV9TV0YiLCJST0xFX0xBQkVMIl0sImNsaWVudF9pZCI6ImR4bnVtIiwiYXVkIjpbImhucmFkaW8tcmVzb3VyY2UiXSwidXNlcl9pZCI6MTYwNDQyMDM1NDQ4Mzg4ODEzMCwidXNlcl9pZF9zdHIiOiIxNjA0NDIwMzU0NDgzODg4MTMwIiwicGF5bG9hZCI6e30sInNjb3BlIjpbInJlYWQiXSwibmlja25hbWUiOiLnlKjmiLdfMTY3MTM1ODU5NTg1NSIsImR4QWNjb3VudElkIjoiMTk2NjAyOTgxODY4MjA5MzU3MCIsImV4cCI6MTc1NzY1OTQxMCwianRpIjoiYTY0YmE1OGMtM2RmOC00ZDFiLWJiZmEtMmU1NzdkNzlkMTZmIn0.pIlHXRQwJlQP8NzKEbXq0kidG55CUXEo0-1ERlqYTXHKT93u6by5w07kL8mV9VEtWhKD5nX2yrdhy7TbXM9dVGBDz4RUoHL_klJP1j-vw9xOLJVakpIOsK7WccobdrVOoarUhvHami6p6caeB9qvzY2IcSXrhxcWV4fpyIiOfOFLu_14uzMVzTZ-qHGaSa1EKm0c8kRTPL3GApV8sFinEcoE4bA6awGmR2yPpCXwe41d-B8ElZlQBmR9h9Q7-b8GEx7AUtFswplybN9CwFgnZLsrfkUqaH48gncx6OBmntpnbDgi679SulMCWM_fSntygUatbRH6xPuxUXQWw9JiBw"
+});
+cookieStore.set({
+    "domain": "hntv.tv",
+    "expires": null,
+    "name": "dxToken",
+    "partitioned": false,
+    "path": "/",
+    "sameSite": "lax",
+    "secure": false,
+    "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlvbklkIjpudWxsLCJ1c2VyX25hbWUiOiIxNTM0NjM0OTg5NyIsIm1vYmlsZSI6IjE1MzQ2MzQ5ODk3IiwiZHhVc2VySWQiOiIxOTY2MDI5ODE4NjgyMDkzNTcxIiwiYWN0dWFsX25hbWUiOm51bGwsImNsaWVudF9hdXRob3JpdGllcyI6WyJST0xFX1NVQlNDUklCRSIsIlJPTEVfQ01TIiwiUk9MRV9VU0VSIiwiUk9MRV9EWE5VTSIsIlJPTEVfRlVTSU9OIiwiUk9MRV9BVVRIIiwiUk9MRV9EWFFVQU4iLCJST0xFX0RYTlVNWk5YIiwiUk9MRV9TV0YiLCJST0xFX0xBQkVMIl0sImNsaWVudF9pZCI6ImR4bnVtIiwiYXVkIjpbImhucmFkaW8tcmVzb3VyY2UiXSwidXNlcl9pZCI6MTYwNDQyMDM1NDQ4Mzg4ODEzMCwidXNlcl9pZF9zdHIiOiIxNjA0NDIwMzU0NDgzODg4MTMwIiwicGF5bG9hZCI6e30sInNjb3BlIjpbInJlYWQiXSwibmlja25hbWUiOiLnlKjmiLdfMTY3MTM1ODU5NTg1NSIsImR4QWNjb3VudElkIjoiMTk2NjAyOTgxODY4MjA5MzU3MCIsImV4cCI6MTc1NzY1OTQxMCwianRpIjoiYTY0YmE1OGMtM2RmOC00ZDFiLWJiZmEtMmU1NzdkNzlkMTZmIn0.pIlHXRQwJlQP8NzKEbXq0kidG55CUXEo0-1ERlqYTXHKT93u6by5w07kL8mV9VEtWhKD5nX2yrdhy7TbXM9dVGBDz4RUoHL_klJP1j-vw9xOLJVakpIOsK7WccobdrVOoarUhvHami6p6caeB9qvzY2IcSXrhxcWV4fpyIiOfOFLu_14uzMVzTZ-qHGaSa1EKm0c8kRTPL3GApV8sFinEcoE4bA6awGmR2yPpCXwe41d-B8ElZlQBmR9h9Q7-b8GEx7AUtFswplybN9CwFgnZLsrfkUqaH48gncx6OBmntpnbDgi679SulMCWM_fSntygUatbRH6xPuxUXQWw9JiBw"
+});
+localStorage.setItem('loginInfo', '[object Object]');
+localStorage.setItem('token', 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlvbklkIjpudWxsLCJ1c2VyX25hbWUiOiIxNTM0NjM0OTg5NyIsIm1vYmlsZSI6IjE1MzQ2MzQ5ODk3IiwiZHhVc2VySWQiOiIxOTY2MDI5ODE4NjgyMDkzNTcxIiwiYWN0dWFsX25hbWUiOm51bGwsImNsaWVudF9hdXRob3JpdGllcyI6WyJST0xFX1NVQlNDUklCRSIsIlJPTEVfQ01TIiwiUk9MRV9VU0VSIiwiUk9MRV9EWE5VTSIsIlJPTEVfRlVTSU9OIiwiUk9MRV9BVVRIIiwiUk9MRV9EWFFVQU4iLCJST0xFX0RYTlVNWk5YIiwiUk9MRV9TV0YiLCJST0xFX0xBQkVMIl0sImNsaWVudF9pZCI6ImR4bnVtIiwiYXVkIjpbImhucmFkaW8tcmVzb3VyY2UiXSwidXNlcl9pZCI6MTYwNDQyMDM1NDQ4Mzg4ODEzMCwidXNlcl9pZF9zdHIiOiIxNjA0NDIwMzU0NDgzODg4MTMwIiwicGF5bG9hZCI6e30sInNjb3BlIjpbInJlYWQiXSwibmlja25hbWUiOiLnlKjmiLdfMTY3MTM1ODU5NTg1NSIsImR4QWNjb3VudElkIjoiMTk2NjAyOTgxODY4MjA5MzU3MCIsImV4cCI6MTc1NzY1OTQxMCwianRpIjoiYTY0YmE1OGMtM2RmOC00ZDFiLWJiZmEtMmU1NzdkNzlkMTZmIn0.pIlHXRQwJlQP8NzKEbXq0kidG55CUXEo0-1ERlqYTXHKT93u6by5w07kL8mV9VEtWhKD5nX2yrdhy7TbXM9dVGBDz4RUoHL_klJP1j-vw9xOLJVakpIOsK7WccobdrVOoarUhvHami6p6caeB9qvzY2IcSXrhxcWV4fpyIiOfOFLu_14uzMVzTZ-qHGaSa1EKm0c8kRTPL3GApV8sFinEcoE4bA6awGmR2yPpCXwe41d-B8ElZlQBmR9h9Q7-b8GEx7AUtFswplybN9CwFgnZLsrfkUqaH48gncx6OBmntpnbDgi679SulMCWM_fSntygUatbRH6xPuxUXQWw9JiBw');
+`;
+
 const hnCode = (name: string) => `
 [...document.querySelectorAll('audio, video')].forEach(el => el.muted = true)
 const style = document.createElement('style');
@@ -44,11 +69,15 @@ function change(name) {
   setTimeout(() => {
   const programmeList = [...programmeContent.querySelectorAll('li')];
   console.log(programmeList)
-  const live = programmeList.map(e => e.firstChild).find(e => e.matches('.live'));
+  const progs = programmeList.map(e => e.firstChild)
+  .filter(e => !e.matches('.trailer'));
+  const live = progs
+  .find(e => e.matches('.live')) ?? progs.at(-1);
   console.log(live)
   live?.click();
 
   style.remove();
+  document.querySelector('video')?.play();
 
   const style2 = document.createElement('style');
   document.head.appendChild(style2);
@@ -63,6 +92,7 @@ function change(name) {
     cursor: auto !important;
     position: fixed !important;
     background: black !important;
+    z-index: 999999999 !important;
   }\`, 0);
 
   }, 1000)
@@ -261,7 +291,12 @@ const sdList = sdChannels.map((channel, i) => ({
   `,
 }));
 
-export const channels: {name: string; url: string; code: string}[] = [
+export const channels: {
+  name: string;
+  url: string;
+  code: string;
+  startCode?: string;
+}[] = [
   ...[
     {name: 'CCTV-1 综合', url: 'https://tv.cctv.com/live/cctv1/'},
     {name: 'CCTV-2 财经', url: 'https://tv.cctv.com/live/cctv2/'},
@@ -294,6 +329,7 @@ export const channels: {name: string; url: string; code: string}[] = [
     name,
     url: 'https://static.hntv.tv/kds/#/',
     code: hnCode(name),
+    startCode: hnStartCode,
   })),
   ...jsChannelList,
   ...hbList,

@@ -81,6 +81,11 @@ function App() {
           mediaPlaybackRequiresUserAction={false}
           allowsInlineMediaPlayback={true}
           mediaCapturePermissionGrantType="grant"
+          onLoadStart={() => {
+            if (channel.startCode) {
+              webviewRef.current?.injectJavaScript(channel.startCode);
+            }
+          }}
           onLoad={e => {
             // console.log(channel.code);
             webviewRef.current?.injectJavaScript(channel.code);
