@@ -40,6 +40,7 @@ jobs:
           mkdir ota
           node scripts/ota.js
           npm run export-android
+          npm run build-usage
 
       # Set Current Date As Env Variable
       - name: Set current date as env variable

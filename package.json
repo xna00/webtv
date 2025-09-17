@@ -3,6 +3,7 @@
   "version": "0.0.9",
   "private": true,
   "files": [],
+  "type": "module",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios --simulator=\"iPhone 16\"",
@@ -12,7 +13,8 @@
     "export-android": "mkdir -p android/output && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/output/index.android.bundle --assets-dest android/output  && cd android && find output -type f | zip index.android.bundle.zip -@ && cd .. && rm -rf android/output && mv android/index.android.bundle.zip ./ota",
     "export-ios": "mkdir -p ios/output && react-native bundle --platform ios --dev false --entry-file index.js --bundle-output ios/output/main.jsbundle --assets-dest ios/output && cd ios && find output -type f | zip main.jsbundle.zip -@ && cd .. && rm -rf ios/output",
     "build-android": "cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && cd ..",
-    "install-android": "adb install -r android/app/build/outputs/apk/release/app-release.apk"
+    "install-android": "adb install -r android/app/build/outputs/apk/release/app-release.apk",
+    "build-usage": "node scripts/md-to-html.ts"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.1.0",
