@@ -9,28 +9,69 @@
         body {
             max-width: 800px;
             margin: 0 auto;
-            padding: 1em;
+            padding: 2em 1.5em; /* 增加上下边距，提高页面整体舒适度 */
+            line-height: 1.6; /* 增加行高，提高可读性 */
         }
         
         /* 保留少量必要的样式以保证可读性 */
-        h1, h2, h3 {
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
+        h1 {
+            margin-top: 2em; /* 增加大标题上边距 */
+            margin-bottom: 0.8em; /* 增加大标题下边距 */
+            font-size: 1.8em; /* 适当增大标题字号 */
+        }
+        
+        h2 {
+            margin-top: 1.8em; /* 增加二级标题上边距 */
+            margin-bottom: 0.7em; /* 增加二级标题下边距 */
+            font-size: 1.5em; /* 适当增大标题字号 */
+        }
+        
+        h3 {
+            margin-top: 1.6em; /* 增加三级标题上边距 */
+            margin-bottom: 0.6em; /* 增加三级标题下边距 */
+            font-size: 1.3em; /* 适当增大标题字号 */
         }
         
         p {
-            margin-bottom: 1em;
+            margin-bottom: 1.2em; /* 增加段落之间的间距 */
+            text-align: justify; /* 段落文本两端对齐，提高可读性 */
         }
         
         ul,
 ol {
-            margin: 1em 0;
+            margin: 1.2em 0 1.2em 1.5em; /* 增加列表与前后内容的间距，并设置左边缩进 */
+        }
+        
+        li {
+            margin-bottom: 0.5em; /* 增加列表项之间的间距 */
+        }
+        
+        /* 链接样式 */
+        a {
+            color: #0366d6; /* 使用蓝色作为链接颜色，符合常见网页设计 */
+            text-decoration: none; /* 移除默认下划线 */
+        }
+        
+        a:hover {
+            text-decoration: underline; /* 鼠标悬停时显示下划线 */
         }
         
         /* 响应式调整 */
         @media (max-width: 768px) {
             body {
-                padding: 0.5em;
+                padding: 1.5em 1em; /* 在移动设备上适当调整边距 */
+            }
+            
+            h1 {
+                font-size: 1.6em; /* 在移动设备上适当减小标题字号 */
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+            
+            h3 {
+                font-size: 1.2em;
             }
         }
     </style>
