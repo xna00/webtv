@@ -3,47 +3,170 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 function mdToHtml(markdown: string): string {
-  let html = markdown;
+  // 将Markdown按行分割进行处理
+  const lines = markdown.split('\n');
+  let html = '';
+  let inList = false; // 用于跟踪无序列表
+  let inOrderedList = false; // 用于跟踪有序列表
+  let currentParagraph = '';
   
-  // 转换标题
-  html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
-  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
-  html = html.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
-  
-  // 转换粗体
-  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  
-  // 转换斜体
-  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-  
-  // 转换链接
-  html = html.replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '<a href="$2">$1</a>');
-  
-  // 转换列表项
-  html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
-  
-  // 转换段落
-  html = html.replace(/\n\n/g, '</p><p>');
-  html = html.replace(/^(.+)$/gm, '<p>$1</p>');
-  
-  // 处理列表
-  html = html.replace(/<li>(.+)<\/li>/g, (match, content) => {
-    if (html.includes('<li>') && !html.includes('<ul>')) {
-      return `<ul><li>${content}</li></ul>`;
+  // 处理每一行
+  for (const line of lines) {
+    const trimmedLine = line.trim();
+    
+    // 如果是空行，处理当前段落
+    if (trimmedLine === '') {
+      if (currentParagraph !== '') {
+        html += `<p>${currentParagraph}</p>`;
+        currentParagraph = '';
+      }
+      continue;
     }
-    return match;
-  });
+    
+    // 处理标题
+    if (trimmedLine.startsWith('# ')) {
+      // 处理未闭合的段落
+      if (currentParagraph !== '') {
+        html += `<p>${currentParagraph}</p>`;
+        currentParagraph = '';
+      }
+      // 结束未闭合的列表
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      if (inOrderedList) {
+        html += '</ol>';
+        inOrderedList = false;
+      }
+      html += `<h1>${trimmedLine.substring(2)}</h1>`;
+      continue;
+    }
+    if (trimmedLine.startsWith('## ')) {
+      if (currentParagraph !== '') {
+        html += `<p>${currentParagraph}</p>`;
+        currentParagraph = '';
+      }
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      if (inOrderedList) {
+        html += '</ol>';
+        inOrderedList = false;
+      }
+      html += `<h2>${trimmedLine.substring(3)}</h2>`;
+      continue;
+    }
+    if (trimmedLine.startsWith('### ')) {
+      if (currentParagraph !== '') {
+        html += `<p>${currentParagraph}</p>`;
+        currentParagraph = '';
+      }
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      if (inOrderedList) {
+        html += '</ol>';
+        inOrderedList = false;
+      }
+      html += `<h3>${trimmedLine.substring(4)}</h3>`;
+      continue;
+    }
+    
+    // 处理列表项
+    // 处理无序列表 (- 开头)
+    if (trimmedLine.startsWith('- ')) {
+      // 处理未闭合的段落
+      if (currentParagraph !== '') {
+        html += `<p>${currentParagraph}</p>`;
+        currentParagraph = '';
+      }
+      // 结束有序列表
+      if (inOrderedList) {
+        html += '</ol>';
+        inOrderedList = false;
+      }
+      // 开始新列表
+      if (!inList) {
+        html += '<ul>';
+        inList = true;
+      }
+      // 提取列表项内容并处理格式
+      let listContent = trimmedLine.substring(2);
+      // 处理粗体
+      listContent = listContent.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      // 处理斜体
+      listContent = listContent.replace(/\*(.+?)\*/g, '<em>$1</em>');
+      // 处理链接
+      listContent = listContent.replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '<a href="$2">$1</a>');
+      
+      html += `<li>${listContent}</li>`;
+      continue;
+    }
+    
+    // 处理有序列表 (数字+点+空格 开头)
+    const orderedListMatch = trimmedLine.match(/^(\d+)\.\s+(.*)$/);
+    if (orderedListMatch) {
+      // 处理未闭合的段落
+      if (currentParagraph !== '') {
+        html += `<p>${currentParagraph}</p>`;
+        currentParagraph = '';
+      }
+      // 结束无序列表
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      // 开始新有序列表
+      if (!inOrderedList) {
+        html += '<ol>';
+        inOrderedList = true;
+      }
+      // 提取列表项内容并处理格式
+      let listContent = orderedListMatch[2];
+      // 处理粗体
+      listContent = listContent.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      // 处理斜体
+      listContent = listContent.replace(/\*(.+?)\*/g, '<em>$1</em>');
+      // 处理链接
+      listContent = listContent.replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '<a href="$2">$1</a>');
+      
+      html += `<li>${listContent}</li>`;
+      continue;
+    }
+    
+    // 处理普通文本行（添加到当前段落）
+    if (currentParagraph !== '') {
+      currentParagraph += ' ';
+    }
+    // 处理行内格式
+    let lineContent = trimmedLine;
+    // 处理粗体
+    lineContent = lineContent.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // 处理斜体
+    lineContent = lineContent.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    // 处理链接
+    lineContent = lineContent.replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '<a href="$2">$1</a>');
+    
+    currentParagraph += lineContent;
+  }
   
-  // 清理多余的段落标签
-  html = html.replace(/<p><h/g, '<h');
-  html = html.replace(/<\/h(\d)><\/p>/g, '</h$1>');
-  html = html.replace(/<p><ul>/g, '<ul>');
-  html = html.replace(/<\/ul><\/p>/g, '</ul>');
-  html = html.replace(/<p><li>/g, '<li>');
-  html = html.replace(/<\/li><\/p>/g, '</li>');
+  // 处理最后一个段落
+  if (currentParagraph !== '') {
+    html += `<p>${currentParagraph}</p>`;
+  }
   
-  // 修改HTML结构以适应新样式
+  // 确保关闭最后一个列表
+    if (inList) {
+      html += '</ul>';
+    }
+    if (inOrderedList) {
+      html += '</ol>';
+    }
+  
+  // 使用HTML自带样式为主，保留少量必要的基本样式
   let styledHtml = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -51,95 +174,32 @@ function mdToHtml(markdown: string): string {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
     <title>WebTV 应用使用说明</title>
     <style>
-        /* 全局样式重置 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        /* 基础样式 */
+        /* 基本样式设置，尽量使用浏览器默认样式 */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
+            padding: 1em;
         }
         
-        /* 标题样式 */
-        h1 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 30px;
+        /* 保留少量必要的样式以保证可读性 */
+        h1, h2, h3 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
         }
         
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #333;
-            margin: 30px 0 15px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #555;
-            margin: 20px 0 12px;
-        }
-        
-        /* 文本和段落样式 */
         p {
-            margin-bottom: 16px;
-            font-size: 1rem;
-            color: #333;
-            line-height: 1.6;
+            margin-bottom: 1em;
         }
         
-        /* 列表样式 */
-        ul {
-            margin: 16px 0;
-            padding-left: 24px;
+        ul,
+ol {
+            margin: 1em 0;
         }
         
-        li {
-            margin-bottom: 8px;
-        }
-        
-        /* 强调和链接 */
-        strong {
-            font-weight: 600;
-        }
-        
-        a {
-            color: #0366d6;
-            text-decoration: underline;
-        }
-        
-        a:hover {
-            color: #0256cc;
-        }
-        
-        /* 响应式设计 */
+        /* 响应式调整 */
         @media (max-width: 768px) {
             body {
-                padding: 15px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            h2 {
-                font-size: 1.4rem;
-            }
-            
-            h3 {
-                font-size: 1.1rem;
+                padding: 0.5em;
             }
         }
     </style>
