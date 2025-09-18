@@ -5,119 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
     <title>WebTV 应用使用说明</title>
     <style>
-        /* 全局样式重置 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        /* 基础样式 */
+        /* 基本样式设置，尽量使用浏览器默认样式 */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
+            padding: 1em;
         }
         
-        /* 标题样式 */
-        h1 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 30px;
+        /* 保留少量必要的样式以保证可读性 */
+        h1, h2, h3 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
         }
         
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #333;
-            margin: 30px 0 15px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #555;
-            margin: 20px 0 12px;
-        }
-        
-        /* 文本和段落样式 */
         p {
-            margin-bottom: 16px;
-            font-size: 1rem;
-            color: #333;
-            line-height: 1.6;
+            margin-bottom: 1em;
         }
         
-        /* 列表样式 */
-        ul {
-            margin: 16px 0;
-            padding-left: 24px;
+        ul,
+ol {
+            margin: 1em 0;
         }
         
-        li {
-            margin-bottom: 8px;
-        }
-        
-        /* 强调和链接 */
-        strong {
-            font-weight: 600;
-        }
-        
-        a {
-            color: #0366d6;
-            text-decoration: underline;
-        }
-        
-        a:hover {
-            color: #0256cc;
-        }
-        
-        /* 响应式设计 */
+        /* 响应式调整 */
         @media (max-width: 768px) {
             body {
-                padding: 15px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            h2 {
-                font-size: 1.4rem;
-            }
-            
-            h3 {
-                font-size: 1.1rem;
+                padding: 0.5em;
             }
         }
     </style>
 </head>
 <body>
-<h1>WebTV 应用使用说明</h1><h2>一、应用简介</h2><p>WebTV 是一款支持 Android 平台的电视直播应用，通过加载各大电视台的直播网页并自动进入全屏，为用户提供简洁直观的电视观看体验。</p><p>主要功能特点：</p>
-<ul><li>支持多个电视频道的直播观看</li></ul>
-<ul><li>简洁的界面设计，易于操作</li></ul>
-<ul><li>自动记忆上次观看的频道</li></ul>
-<ul><li>支持 OTA 热更新，无需重新下载应用即可获取最新功能</li><h2>二、运行环境要求</h2><li>Android 设备：支持 Android 7.0 及以上版本</li></ul>
-<ul><li>稳定的网络连接（建议使用 Wi-Fi）</li></ul><h2>三、应用下载与安装</h2><h3>Android 版本下载</h3><p>您可以通过以下链接下载 WebTV 应用的 Android 版本：</p><p>1. 链接1：<a href="https://gh-proxy.com/https://github.com/xna00/webtv/blob/gh-pages/app-release.apk">点击下载</a></p>
-<p>2. 链接2：<a href="https://hk.gh-proxy.com/https://github.com/xna00/webtv/blob/gh-pages/app-release.apk">点击下载</a></p>
-<p>3. 链接3：<a href="https://webtv0.netlify.appapp-release.apk">点击下载</a></p><h3>安装步骤</h3><p>1. 点击上方任意链接下载应用安装包</p>
-<p>2. 在 Android 设备上允许安装来自未知来源的应用</p>
-<p>3. 找到下载的 APK 文件并点击安装</p>
-<p>4. 安装完成后，点击应用图标启动 WebTV</p><h2>四、应用使用方法</h2><h3>基本操作</h3><p>1. <strong>启动应用</strong>：安装完成后，点击应用图标启动 WebTV</p>
-<p>2. <strong>显示/隐藏频道列表</strong>：点击屏幕任意位置可切换频道列表的显示状态</p>
-<p>3. <strong>切换频道</strong>：在频道列表中点击任意频道名称即可切换到该频道</p>
-<p>4. <strong>记忆观看历史</strong>：应用会自动保存您上次观看的频道，下次启动时自动恢复</p><h3>支持的频道</h3><p>应用支持以下各类电视频道：</p>
-<ul><li>中央电视台频道</li></ul>
-<ul><li>河南电视台频道</li></ul>
-<ul><li>江苏电视台频道</li></ul>
-<ul><li>河北电视台频道</li></ul>
-<ul><li>湖北电视台频道</li></ul>
-<ul><li>山东电视台频道</li></ul><h2>五、应用更新</h2><p>WebTV 应用集成了 OTA 热更新功能，启动时会自动检查是否有新版本可用。如有更新，应用会在后台自动下载并应用更新，无需用户手动操作。</p>
+<h1>WebTV 应用使用说明</h1><h2>一、应用简介</h2><p>WebTV 是一款支持 Android 平台的电视直播应用，通过加载各大电视台的直播网页并自动进入全屏，为用户提供简洁直观的电视观看体验。</p><p>主要功能特点：</p><ul><li>支持多个电视频道的直播观看</li><li>简洁的界面设计，易于操作</li><li>自动记忆上次观看的频道</li><li>支持 OTA 热更新，无需重新下载应用即可获取最新功能</li></ul><h2>二、运行环境要求</h2><ul><li>Android 设备：支持 Android 7.0 及以上版本</li><li>稳定的网络连接（建议使用 Wi-Fi）</li></ul><h2>三、应用下载与安装</h2><h3>Android 版本下载</h3><p>您可以通过以下链接下载 WebTV 应用的 Android 版本：</p><ol><li>链接1：<a href="https://gh-proxy.com/https://github.com/xna00/webtv/blob/gh-pages/app-release.apk">点击下载</a></li><li>链接2：<a href="https://hk.gh-proxy.com/https://github.com/xna00/webtv/blob/gh-pages/app-release.apk">点击下载</a></li><li>链接3：<a href="https://webtv0.netlify.appapp-release.apk">点击下载</a></li></ol><h3>安装步骤</h3><ol><li>点击上方任意链接下载应用安装包</li><li>在 Android 设备上允许安装来自未知来源的应用</li><li>找到下载的 APK 文件并点击安装</li><li>安装完成后，点击应用图标启动 WebTV</li></ol><h2>四、应用使用方法</h2><h3>基本操作</h3><ol><li><strong>启动应用</strong>：安装完成后，点击应用图标启动 WebTV</li><li><strong>显示/隐藏频道列表</strong>：点击屏幕任意位置可切换频道列表的显示状态</li><li><strong>切换频道</strong>：在频道列表中点击任意频道名称即可切换到该频道</li><li><strong>记忆观看历史</strong>：应用会自动保存您上次观看的频道，下次启动时自动恢复</li></ol><h3>支持的频道</h3><p>应用支持以下各类电视频道：</p><ul><li>中央电视台频道</li><li>河南电视台频道</li><li>江苏电视台频道</li><li>河北电视台频道</li><li>湖北电视台频道</li><li>山东电视台频道</li></ul><h2>五、应用更新</h2><p>WebTV 应用集成了 OTA 热更新功能，启动时会自动检查是否有新版本可用。如有更新，应用会在后台自动下载并应用更新，无需用户手动操作。</p>
 </body>
 </html>
