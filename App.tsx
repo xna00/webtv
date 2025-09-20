@@ -1,12 +1,24 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {ScrollView, StatusBar, Text, View} from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import {
+  ScrollView,
+  StatusBar,
+  Text,
+  View,
+  useColorScheme,
+} from 'react-native';
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+  SafeAreaView,
+} from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {useCheckVersion} from './useCheckVersion';
-import {channels} from './channels';
+import { useCheckVersion } from './useCheckVersion';
+import { channels } from './channels';
 
-function App() {
+function AppContent() {
+  const isDarkMode = useColorScheme() === 'dark';
   const webviewRef = useRef<WebView>(null);
   const [visible, setVisible] = useState(false);
   const [index, setIndex] = useState<number>();
@@ -28,7 +40,7 @@ function App() {
     e?.measure((x, y, width, height, pageX, pageY) => {
       console.log(y, pageY);
       console.log(scrollRef.current);
-      scrollRef.current?.scrollTo({y: y - 170, animated: false});
+      scrollRef.current?.scrollTo({ y: y - 170, animated: false });
     });
   };
 
@@ -54,86 +66,99 @@ function App() {
   if (!channel) return null;
 
   return (
-    // <SafeAreaView style={backgroundStyle}>
-    <View
-      style={{height: '100%'}}
-      onTouchEnd={e => {
-        e.stopPropagation();
-        setVisible(!visible);
-      }}>
-      <StatusBar
-        barStyle={false ? 'light-content' : 'dark-content'}
-        backgroundColor={'transparent'}
-        translucent
-      />
-      <View style={{flex: 1}} pointerEvents="none">
-        <WebView
-          key={index}
-          onTouchStart={e => e.preventDefault()}
-          onTouchEnd={e => e.preventDefault()}
-          ref={webviewRef}
-          userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-          source={{
-            uri: channel.url,
-          }}
-          webviewDebuggingEnabled
-          allowsFullscreenVideo
-          mediaPlaybackRequiresUserAction={false}
-          allowsInlineMediaPlayback={true}
-          mediaCapturePermissionGrantType="grant"
-          onLoadStart={() => {
-            if (channel.startCode) {
-              webviewRef.current?.injectJavaScript(channel.startCode);
-            }
-          }}
-          onLoad={e => {
-            // console.log(channel.code);
-            webviewRef.current?.injectJavaScript(channel.code);
-          }}></WebView>
-      </View>
-
-      <ScrollView
-        ref={scrollRef}
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          width: 300,
-          height: '100%',
-          backgroundColor: 'white',
-          display: visible ? 'flex' : 'none',
-        }}
-        onTouchStart={e => {
+    <>
+      <View
+        style={{ height: '100%' }}
+        onTouchEnd={e => {
           e.stopPropagation();
-        }}>
-        {channels.map((c, i) => (
-          <View
-            ref={e => {
-              i === index && (selectedRef.current = e);
+          setVisible(!visible);
+        }}
+      >
+        <View style={{ flex: 1 }} pointerEvents="none">
+          <WebView
+            key={index}
+            onTouchStart={e => e.preventDefault()}
+            onTouchEnd={e => e.preventDefault()}
+            ref={webviewRef}
+            userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+            source={{
+              uri: channel.url,
             }}
-            key={c.url + c.name}
-            style={{
-              borderWidth: 1,
-              borderColor: i === index ? 'red' : 'transparent',
-              padding: 4,
-              borderRadius: 4,
+            webviewDebuggingEnabled
+            allowsFullscreenVideo
+            mediaPlaybackRequiresUserAction={false}
+            allowsInlineMediaPlayback={true}
+            mediaCapturePermissionGrantType="grant"
+            onLoadStart={() => {
+              if (channel.startCode) {
+                webviewRef.current?.injectJavaScript(channel.startCode);
+              }
             }}
-            onTouchEnd={e => {
-              setIndex(i);
-            }}>
-            <Text
-              style={{
-                fontSize: 20,
-                padding: 4,
-              }}>
-              {c.name}
-            </Text>
-          </View>
-        ))}
-      </ScrollView>
-    </View>
+            onLoad={e => {
+              // console.log(channel.code);
+              webviewRef.current?.injectJavaScript(channel.code);
+            }}
+          ></WebView>
+        </View>
 
-    // </SafeAreaView>
+        <ScrollView
+          ref={scrollRef}
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            width: 300,
+            height: '100%',
+            backgroundColor: 'white',
+            display: visible ? 'flex' : 'none',
+          }}
+          onTouchStart={e => {
+            e.stopPropagation();
+          }}
+        >
+          {channels.map((c, i) => (
+            <View
+              ref={e => {
+                i === index && (selectedRef.current = e);
+              }}
+              key={c.url + c.name}
+              style={{
+                borderWidth: 1,
+                borderColor: i === index ? 'red' : 'transparent',
+                padding: 4,
+                borderRadius: 4,
+              }}
+              onTouchEnd={e => {
+                setIndex(i);
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  padding: 4,
+                }}
+              >
+                {c.name}
+              </Text>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <SafeAreaProvider>
+      <StatusBar
+        barStyle={'light-content'}
+        translucent
+        backgroundColor="transparent"
+      />
+
+      <AppContent />
+    </SafeAreaProvider>
   );
 }
 
