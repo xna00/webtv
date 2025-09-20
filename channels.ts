@@ -223,14 +223,14 @@ const hbList = hbChannels.map((name, i) => ({
 }));
 
 const hubeiChannels = [
-  {name: '湖北卫视', url: '/app/tv/431'},
-  {name: '湖北经视', url: '/app/tv/432'},
-  {name: '湖北综合', url: '/app/tv/433'},
-  {name: '湖北公共', url: '/app/tv/434'},
-  {name: '湖北影视', url: '/app/tv/435'},
-  {name: '湖北生活', url: '/app/tv/436'},
-  {name: '湖北教育', url: '/app/tv/437'},
-  {name: '湖北垄上', url: '/app/tv/438'},
+  { name: '湖北卫视', url: '/app/tv/431' },
+  { name: '湖北经视', url: '/app/tv/432' },
+  { name: '湖北综合', url: '/app/tv/433' },
+  { name: '湖北公共', url: '/app/tv/434' },
+  { name: '湖北影视', url: '/app/tv/435' },
+  { name: '湖北生活', url: '/app/tv/436' },
+  { name: '湖北教育', url: '/app/tv/437' },
+  { name: '湖北垄上', url: '/app/tv/438' },
 ];
 
 const hubeiList = hubeiChannels.map((channel, i) => ({
@@ -238,7 +238,9 @@ const hubeiList = hubeiChannels.map((channel, i) => ({
   url: 'https://news.hbtv.com.cn' + channel.url,
   code: `
   setTimeout(() => {
-    document.querySelector('.prism-big-play-btn')?.click();
+    if (document.querySelector('video')?.paused) {
+      document.querySelector('.prism-big-play-btn')?.click();
+    }
     const style2 = document.createElement('style');
   document.head.appendChild(style2);
   style2.sheet.insertRule('* { width: 0 !important; height: 0!important; padding: 0!important; overflow: hidden!important }', 0);
@@ -259,15 +261,15 @@ const hubeiList = hubeiChannels.map((channel, i) => ({
 }));
 
 const sdChannels = [
-  {name: '山东卫视', url: 'iqilu.com/live/sdtv/'},
-  {name: '齐鲁频道', url: 'iqilu.com/live/qlpd/'},
-  {name: '体育频道', url: 'iqilu.com/live/typd/'},
-  {name: '生活频道', url: 'iqilu.com/live/shpd/'},
-  {name: '综艺频道', url: 'iqilu.com/live/zypd/'},
-  {name: '新闻频道', url: 'iqilu.com/live/ggpd/'},
-  {name: '农科频道', url: 'iqilu.com/live/nkpd/'},
-  {name: '文旅频道', url: 'iqilu.com/live/yspd/'},
-  {name: '少儿频道', url: 'iqilu.com/live/sepd/'},
+  { name: '山东卫视', url: 'iqilu.com/live/sdtv/' },
+  { name: '齐鲁频道', url: 'iqilu.com/live/qlpd/' },
+  { name: '体育频道', url: 'iqilu.com/live/typd/' },
+  { name: '生活频道', url: 'iqilu.com/live/shpd/' },
+  { name: '综艺频道', url: 'iqilu.com/live/zypd/' },
+  { name: '新闻频道', url: 'iqilu.com/live/ggpd/' },
+  { name: '农科频道', url: 'iqilu.com/live/nkpd/' },
+  { name: '文旅频道', url: 'iqilu.com/live/yspd/' },
+  { name: '少儿频道', url: 'iqilu.com/live/sepd/' },
 ];
 
 const sdList = sdChannels.map((channel, i) => ({
@@ -297,42 +299,42 @@ export const channels: {
   code: string;
   startCode?: string;
 }[] = [
-  ...[
-    {name: 'CCTV-1 综合', url: 'https://tv.cctv.com/live/cctv1/'},
-    {name: 'CCTV-2 财经', url: 'https://tv.cctv.com/live/cctv2/'},
-    {name: 'CCTV-3 综艺', url: 'https://tv.cctv.com/live/cctv3/'},
-    {name: 'CCTV-4 中文国际（亚）', url: 'https://tv.cctv.com/live/cctv4/'},
-    {name: 'CCTV-5 体育', url: 'https://tv.cctv.com/live/cctv5/'},
-    {name: 'CCTV-5+ 体育赛事', url: 'https://tv.cctv.com/live/cctv5plus/'},
-    {name: 'CCTV-6 电影', url: 'https://tv.cctv.com/live/cctv6/'},
-    {name: 'CCTV-7 国防军事', url: 'https://tv.cctv.com/live/cctv7/'},
-    {name: 'CCTV-8 电视剧', url: 'https://tv.cctv.com/live/cctv8/'},
-    {name: 'CCTV-9 纪录', url: 'https://tv.cctv.com/live/cctvjilu/'},
-    {name: 'CCTV-10 科教', url: 'https://tv.cctv.com/live/cctv10/'},
-    {name: 'CCTV-11 戏曲', url: 'https://tv.cctv.com/live/cctv11/'},
-    {name: 'CCTV-12 社会与法', url: 'https://tv.cctv.com/live/cctv12/'},
-    {name: 'CCTV-13 新闻', url: 'https://tv.cctv.com/live/cctv13/'},
-    {name: 'CCTV-14 少儿', url: 'https://tv.cctv.com/live/cctvchild/'},
-    {name: 'CCTV-15 音乐', url: 'https://tv.cctv.com/live/cctv15/'},
-    {name: 'CCTV-16 奥林匹克', url: 'https://tv.cctv.com/live/cctv16/'},
-    {name: 'CCTV-17 农业农村', url: 'https://tv.cctv.com/live/cctv17/'},
-    {
-      name: 'CCTV-4 中文国际（欧）',
-      url: 'https://tv.cctv.com/live/cctveurope/index.shtml',
-    },
-    {
-      name: 'CCTV-4 中文国际（美）',
-      url: 'https://tv.cctv.com/live/cctvamerica/',
-    },
-  ].map(e => ({...e, code: cctvCode})),
-  ...hnChannels.map(name => ({
-    name,
-    url: 'https://static.hntv.tv/kds/#/',
-    code: hnCode(name),
-    startCode: hnStartCode,
-  })),
-  ...jsChannelList,
-  ...hbList,
-  ...hubeiList,
-  ...sdList,
-];
+    ...[
+      { name: 'CCTV-1 综合', url: 'https://tv.cctv.com/live/cctv1/' },
+      { name: 'CCTV-2 财经', url: 'https://tv.cctv.com/live/cctv2/' },
+      { name: 'CCTV-3 综艺', url: 'https://tv.cctv.com/live/cctv3/' },
+      { name: 'CCTV-4 中文国际（亚）', url: 'https://tv.cctv.com/live/cctv4/' },
+      { name: 'CCTV-5 体育', url: 'https://tv.cctv.com/live/cctv5/' },
+      { name: 'CCTV-5+ 体育赛事', url: 'https://tv.cctv.com/live/cctv5plus/' },
+      { name: 'CCTV-6 电影', url: 'https://tv.cctv.com/live/cctv6/' },
+      { name: 'CCTV-7 国防军事', url: 'https://tv.cctv.com/live/cctv7/' },
+      { name: 'CCTV-8 电视剧', url: 'https://tv.cctv.com/live/cctv8/' },
+      { name: 'CCTV-9 纪录', url: 'https://tv.cctv.com/live/cctvjilu/' },
+      { name: 'CCTV-10 科教', url: 'https://tv.cctv.com/live/cctv10/' },
+      { name: 'CCTV-11 戏曲', url: 'https://tv.cctv.com/live/cctv11/' },
+      { name: 'CCTV-12 社会与法', url: 'https://tv.cctv.com/live/cctv12/' },
+      { name: 'CCTV-13 新闻', url: 'https://tv.cctv.com/live/cctv13/' },
+      { name: 'CCTV-14 少儿', url: 'https://tv.cctv.com/live/cctvchild/' },
+      { name: 'CCTV-15 音乐', url: 'https://tv.cctv.com/live/cctv15/' },
+      { name: 'CCTV-16 奥林匹克', url: 'https://tv.cctv.com/live/cctv16/' },
+      { name: 'CCTV-17 农业农村', url: 'https://tv.cctv.com/live/cctv17/' },
+      {
+        name: 'CCTV-4 中文国际（欧）',
+        url: 'https://tv.cctv.com/live/cctveurope/index.shtml',
+      },
+      {
+        name: 'CCTV-4 中文国际（美）',
+        url: 'https://tv.cctv.com/live/cctvamerica/',
+      },
+    ].map(e => ({ ...e, code: cctvCode })),
+    ...hnChannels.map(name => ({
+      name,
+      url: 'https://static.hntv.tv/kds/#/',
+      code: hnCode(name),
+      startCode: hnStartCode,
+    })),
+    ...jsChannelList,
+    ...hbList,
+    ...hubeiList,
+    ...sdList,
+  ];
