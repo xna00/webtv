@@ -1,21 +1,18 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useRef, useState } from 'react';
 import {
   ScrollView,
-  StatusBar,
   Text,
   View,
-  useColorScheme,
+  useColorScheme
 } from 'react-native';
 import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-  SafeAreaView,
+  SafeAreaProvider
 } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { useCheckVersion } from './useCheckVersion';
 import { channels } from './channels';
+import { useCheckVersion } from './useCheckVersion';
 
 function AppContent() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -151,12 +148,6 @@ function AppContent() {
 function App() {
   return (
     <SafeAreaProvider>
-      <StatusBar
-        barStyle={'light-content'}
-        translucent
-        backgroundColor="transparent"
-      />
-
       <AppContent />
     </SafeAreaProvider>
   );
