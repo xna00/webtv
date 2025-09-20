@@ -52,7 +52,7 @@ function AppContent() {
   useEffect(() => {
     AsyncStorage.getItem('lastIndex').then(res => {
       console.log(res);
-      let i = Number(res ?? 0);
+      let i = Number(res ?? 13);
       if (i < 0 || i >= channels.length) {
         i = 0;
       }
