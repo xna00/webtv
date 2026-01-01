@@ -4,6 +4,22 @@ import {Alert, Linking, Platform, ToastAndroid} from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import {version} from './package.json';
 
+const fetchx = async (input: RequestInfo[], init?: RequestInit) => {
+  for (const item of input) {
+    try {
+      const res = await fetch(item, init);
+      if (res.ok) {
+        return res;
+      } else {
+        console.log('fetch error', item, res.status, res.statusText);
+      }
+    } catch (error) {
+      console.log('fetch error', item, error);
+    }
+  }
+  throw new Error(`all fetch error: ${input}`);
+}
+
 export const useCheckVersion = () => {
   const startUpdate = async (url: string, version: number) => {
     hotUpdate.downloadBundleUri(ReactNativeBlobUtil, url, version, {
@@ -23,19 +39,24 @@ export const useCheckVersion = () => {
     });
   };
   const onCheckVersion = () => {
-    // const apiVersionBase = 'https://cdn.jsdelivr.net/npm/webtvota@latest/';
-    const apiVersionBase = 'https://webtv0.netlify.app/';
-    const apkUrl = apiVersionBase + 'app-release.apk';
-    fetch(new URL('update.json', apiVersionBase), {
+    const apiVersionBases = [
+      'https://gh-proxy.org/https://github.com/xna00/webtv/blob/gh-pages/',
+      'https://hk.gh-proxy.org/https://github.com/xna00/webtv/blob/gh-pages/',
+      'https://xna00.github.io/webtv/',
+      'https://webtv0.netlify.app/',
+    ]
+    fetchx(apiVersionBases.map(apiVersionBase => {
+      return new URL('update.json', apiVersionBase).href
+    }), {
       headers: {
         'Cache-Control': 'no-cache',
       },
     })
-      .then(async data => {
-        const result = await data.json();
-        if (!result) {
-          return;
-        }
+      .then(async (res) => {
+        const result = await res.json();
+        const apiVersionBase = apiVersionBases.find(apiVersionBase => res.url.includes(apiVersionBase));
+        console.log(apiVersionBase, result);
+        const apkUrl = apiVersionBase + 'app-release.apk';
         const [v1a, v1b, v1c] = result.version.split('.');
         const [v2a, v2b, v2c] = version.split('.');
         if (v1a !== v2a || v1b !== v2b) {
@@ -77,13 +98,15 @@ export const useCheckVersion = () => {
                     Platform.OS === 'ios'
                       ? new URL(result?.downloadIosUrl, apiVersionBase).href
                       : new URL(result?.downloadAndroidUrl, apiVersionBase)
-                          .href,
+                        .href,
                     result.version,
                   ),
               },
             ],
           );
+          return
         }
+        ToastAndroid.show('App已是最新版本', ToastAndroid.SHORT);
       })
       .catch(e => {
         Alert.alert('Bad' + e);
